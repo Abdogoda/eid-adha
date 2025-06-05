@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>مولد بطاقات عيد الأضحى المبارك</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Scheherazade+New:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Reem+Kufi+Ink&family=Ruwudu:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="arabic-pattern"></div>
+
+    <button class="theme-toggle" title="تبديل الوضع الليلي">🌙</button>
+    <button class="music-toggle" title="تشغيل التكبيرات">🎵</button>
+
+    <div class="container">
+      <div class="header">
+        <div class="kaaba-icon">🕋</div>
+        <div class="mosque-icon">🐑</div>
+        <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم</div>
+        <h1>بطاقات تهنئة عيد الأضحى المبارك</h1>
+      </div>
+
+      <div class="form-container" id="form-container">
+        <div class="input-group">
+          <label for="recipient-name">اسم المُهدى إليه:</label>
+          <input
+            type="text"
+            id="recipient-name"
+            placeholder="مثال: أحمد، فاطمة، العائلة الكريمة"
+          />
+        </div>
+
+        <div class="input-group">
+          <label for="recipient-image">صورة المُهدى إليه (اختياري):</label>
+          <div class="image-upload" id="image-upload">
+            <i class="fas fa-camera"></i>
+            <span>انقر لرفع صورة</span>
+            <input
+              type="file"
+              id="recipient-image"
+              accept="image/*"
+              style="display: none"
+            />
+          </div>
+          <div class="image-preview-container" id="image-preview-container">
+            <img
+              id="image-preview"
+              class="recipient-image"
+              src="#"
+              alt="صورة المُهدى إليه"
+            />
+            <button class="remove-image" id="remove-image">إزالة الصورة</button>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label for="name">اسمك الكريم:</label>
+          <input
+            type="text"
+            id="name"
+            placeholder="مثال: أحمد، فاطمة، العائلة"
+          />
+        </div>
+        <button id="generate-btn">
+          <i class="fas fa-gift"></i> إنشاء بطاقة التهنئة
+        </button>
+      </div>
+
+      <div class="card-container" id="card-container">
+        <div class="eid-card" id="eid-card">
+          <div class="arabic-pattern"></div>
+
+          <div class="eid-card-content">
+            <h1 class="eid-title">عيد أضحى مبارك</h1>
+
+            <div id="recipient-display"></div>
+
+            <p class="eid-message">
+              تقبل الله منا ومنكم صالح الأعمال<br />
+              وكل عام وأنتم بخير<br />
+              أعاده الله علينا وعليكم باليمن والبركات
+            </p>
+
+            <div class="islamic-symbols">
+              <span class="islamic-symbol">🕋</span>
+              <span class="islamic-symbol">🤲</span>
+              <span class="islamic-symbol">🌙</span>
+              <span class="islamic-symbol">🐏</span>
+            </div>
+
+            <p class="from-name" id="from-name">
+              من: <span id="display-name"></span>
+            </p>
+          </div>
+        </div>
+
+        <div class="share-buttons">
+          <button class="share-btn whatsapp-btn" id="whatsapp-share">
+            <i class="fab fa-whatsapp"></i> مشاركة عبر واتساب
+          </button>
+          <button class="share-btn download-btn" id="download-card">
+            <i class="fas fa-download"></i> تحميل الصورة
+          </button>
+          <button class="share-btn link-btn" id="copy-link">
+            <i class="fas fa-link"></i> نسخ رابط المشاركة
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <audio id="eid-audio" loop>
+      <source src="music.mp3" type="audio/mpeg" />
+      <!-- يمكن استبدالها بتكبيرات العيد الحقيقية -->
+    </audio>
+
+    <script src="script.js"></script>
+  </body>
+</html>
