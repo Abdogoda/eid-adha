@@ -177,6 +177,14 @@ document.addEventListener("DOMContentLoaded", function () {
     cardContainer.style.display = "block";
     cardContainer.classList.add("fade-in");
 
+    const giftButton = document.getElementById("gift-card");
+
+if (recipientName.trim() !== "") {
+  giftButton.style.display = "inline-block";
+} else {
+  giftButton.style.display = "none";
+}
+
     // إزالة تأثير الحركة بعد الانتهاء منه
     setTimeout(() => {
       cardContainer.classList.remove("fade-in");
