@@ -336,16 +336,13 @@ document.addEventListener("DOMContentLoaded", function () {
           window.location.href.split("?")[0]
         }?name=${encodeURIComponent(name)}&recipient=${encodeURIComponent(
           recipientName
-        )}&dark=${darkMode}&music=${musicOn}${
-          recipientImageUrl
-            ? `&image=${encodeURIComponent(recipientImageUrl)}`
-            : ""
-        }`;
+        )}&dark=${darkMode}&music=${musicOn}`;
 
         const message = encodeURIComponent(
-          `تهنئة عيد الأضحى المبارك ${
-            recipientName ? `إلى ${recipientName} ` : ""
-          } \n${shareUrl}`
+          `تهنئة عيد الأضحى المبارك \n
+          ${recipientName ? `إلى ${recipientName} ` : ""} \n
+          ${name ? `من ${name} ` : ""} \n
+          ${shareUrl}`
         );
 
         // للأجهزة المحمولة
@@ -375,11 +372,7 @@ document.addEventListener("DOMContentLoaded", function () {
         window.location.href.split("?")[0]
       }?name=${encodeURIComponent(name)}&recipient=${encodeURIComponent(
         recipientName
-      )}&dark=${darkMode}&music=${musicOn}${
-        recipientImageUrl
-          ? `&image=${encodeURIComponent(recipientImageUrl)}`
-          : ""
-      }`;
+      )}&dark=${darkMode}&music=${musicOn}`;
 
       navigator.clipboard
         .writeText(shareUrl)
