@@ -74,7 +74,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Show greeting button handler
     document.querySelector('.show-greeting-btn').addEventListener('click', function() {
       document.querySelector('.eid-overlay').remove();
-      
+      createEidConfetti();
       if (musicOn) {
         audio.play().catch(e => {
           console.log("Audio playback error:", e);
@@ -395,3 +395,42 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 });
+
+function createEidConfetti() {
+  const colors = ['green', 'blue', 'gold', 'red', 'purple', 'pink', 'orange', 'cyan', 'teal', 'brown'];
+  const shapes = ['moon', 'star', 'mosque', 'sheep', 'gift', 'fireworks'];
+  const count = 50; // Number of paper scraps
+  
+  for (let i = 0; i < count; i++) {
+    const confetti = document.createElement('div');
+    confetti.className = 'eid-confetti';
+    
+    // Random color
+    const colorClass = colors[Math.floor(Math.random() * colors.length)];
+    confetti.classList.add(colorClass);
+    
+    // Random shape (only apply to some pieces)
+    if (Math.random() > 0.7) { // 30% chance to have a shape
+      const shapeClass = 'shape-' + shapes[Math.floor(Math.random() * shapes.length)];
+      confetti.classList.add(shapeClass);
+    }
+    
+    // Random position and size
+    const size = 10 + Math.random() * 20;
+    confetti.style.width = `${size}px`;
+    confetti.style.height = `${size}px`;
+    confetti.style.left = `${Math.random() * 100}vw`;
+    
+    // Random animation duration and delay
+    const duration = 3 + Math.random() * 4;
+    const delay = Math.random() * 1;
+    confetti.style.animation = `confetti-fall ${duration}s linear ${delay}s forwards`;
+    
+    document.body.appendChild(confetti);
+    
+    // Remove confetti element after animation completes
+    setTimeout(() => {
+      confetti.remove();
+    }, (duration + delay) * 1000);
+  }
+}
