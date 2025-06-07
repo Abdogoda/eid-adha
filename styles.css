@@ -1,559 +1,675 @@
 *,
-      *::before,
-      *::after {
-        box-sizing: border-box;
-      }
+*::before,
+*::after {
+  box-sizing: border-box;
+}
 
-      :root {
-        --gold: #c19a3e;
-        --deep-green: #014d3e;
-        --cream: #f8f5e8;
-        --dark-red: #7a1c1c;
-        --islamic-green: #014d3e;
-        --eid-gold: #d4af37;
-        --eid-red: #8b0000;
-        --arabic-pattern: #e8e0c8;
-      }
+:root {
+  --gold: #c19a3e;
+  --deep-green: #014d3e;
+  --cream: #f8f5e8;
+  --dark-red: #7a1c1c;
+  --islamic-green: #014d3e;
+  --eid-gold: #d4af37;
+  --eid-red: #8b0000;
+  --arabic-pattern: #e8e0c8;
+}
 
-      body {
-        font-family: "Amiri", serif;
-        background-color: var(--cream);
-        margin: 0;
-        padding: 15px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        min-height: 100vh;
-        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path fill="%23c19a3e" fill-opacity="0.05" d="M50,0 L100,50 L50,100 L0,50 Z"/></svg>');
-        background-size: 100px 100px;
-      }
+body {
+  font-family: "Amiri", serif;
+  background-color: var(--cream);
+  margin: 0;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path fill="%23c19a3e" fill-opacity="0.05" d="M50,0 L100,50 L50,100 L0,50 Z"/></svg>');
+  background-size: 100px 100px;
+}
 
-      .container {
-        width: 100%;
-        max-width: 800px;
-        margin: 0 auto;
-      }
+.container {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
 
-      .header {
-        text-align: center;
-        margin-bottom: 30px;
-        position: relative;
-      }
+.header {
+  text-align: center;
+  margin-bottom: 30px;
+  position: relative;
+}
 
-      .bismillah {
-        font-family: "Scheherazade New", serif;
-        font-size: 1.8rem;
-        font-weight: 700;
-        margin-bottom: 15px;
-        color: var(--deep-green);
-        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-        line-height: 1.5;
-      }
+.bismillah {
+  font-family: "Scheherazade New", serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 15px;
+  color: var(--deep-green);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+  line-height: 1.5;
+}
 
-      .header h1 {
-        font-family: "Amiri", serif;
-        font-size: 1.8rem;
-        font-weight: 700;
-        margin: 10px 0;
-        color: var(--deep-green);
-        position: relative;
-        display: inline-block;
-      }
+.header h1 {
+  font-family: "Amiri", serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin: 10px 0;
+  color: var(--deep-green);
+  position: relative;
+  display: inline-block;
+}
 
-      .header h1::after {
-        content: "";
-        position: absolute;
-        bottom: -8px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 80px;
-        height: 2px;
-        background: linear-gradient(
-          to right,
-          var(--gold),
-          var(--deep-green),
-          var(--gold)
-        );
-        border-radius: 2px;
-      }
+.header h1::after {
+  content: "";
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 2px;
+  background: linear-gradient(
+    to right,
+    var(--gold),
+    var(--deep-green),
+    var(--gold)
+  );
+  border-radius: 2px;
+}
 
-      .kaaba-icon,
-      .mosque-icon {
-        position: absolute;
-        font-size: 2rem;
-        color: var(--gold);
-        opacity: 0.7;
-      }
+.kaaba-icon,
+.mosque-icon {
+  position: absolute;
+  font-size: 2rem;
+  color: var(--gold);
+  opacity: 0.7;
+}
 
-      .kaaba-icon {
-        top: 10px;
-        right: 10px;
-        animation: float 4s ease-in-out infinite;
-      }
+.kaaba-icon {
+  top: 10px;
+  right: 10px;
+  animation: float 4s ease-in-out infinite;
+}
 
-      .mosque-icon {
-        top: 15px;
-        left: 10px;
-        animation: float 4s ease-in-out infinite reverse;
-      }
+.mosque-icon {
+  top: 15px;
+  left: 10px;
+  animation: float 4s ease-in-out infinite reverse;
+}
 
-      @keyframes float {
-        0%,
-        100% {
-          transform: translateY(0px) rotate(0deg);
-        }
-        50% {
-          transform: translateY(-10px) rotate(5deg);
-        }
-      }
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(5deg);
+  }
+}
 
-      .form-container {
-        background-color: #fff;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-        margin: auto;
-        margin-bottom: 20px;
-        width: 100%;
-        border: 1px solid rgba(193, 154, 62, 0.3);
-        position: relative;
-        overflow: hidden;
-      }
+.form-container {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+  margin: auto;
+  margin-bottom: 20px;
+  width: 100%;
+  border: 1px solid rgba(193, 154, 62, 0.3);
+  position: relative;
+  overflow: hidden;
+}
 
-      .form-container::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        right: 0;
-        width: 100%;
-        height: 100%;
-        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path fill="none" stroke="%23c19a3e" stroke-width="0.5" stroke-opacity="0.2" d="M20,20 Q50,0 80,20 Q100,50 80,80 Q50,100 20,80 Q0,50 20,20 Z"/></svg>');
-        background-size: 150px 150px;
-        opacity: 0.3;
-        pointer-events: none;
-      }
+.form-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path fill="none" stroke="%23c19a3e" stroke-width="0.5" stroke-opacity="0.2" d="M20,20 Q50,0 80,20 Q100,50 80,80 Q50,100 20,80 Q0,50 20,20 Z"/></svg>');
+  background-size: 150px 150px;
+  opacity: 0.3;
+  pointer-events: none;
+}
 
-      .input-group {
-        margin-bottom: 15px;
-        position: relative;
-        z-index: 1;
-      }
+.input-group {
+  margin-bottom: 15px;
+  position: relative;
+  z-index: 1;
+}
 
-      label {
-        display: block;
-        margin-bottom: 6px;
-        font-weight: 700;
-        color: var(--deep-green);
-        font-size: 1rem;
-      }
+label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 700;
+  color: var(--deep-green);
+  font-size: 1rem;
+}
 
-      input,
-      .image-upload {
-        width: 100%;
-        padding: 10px 12px;
-        border: 1px solid #ddd;
-        border-radius: 6px;
-        font-size: 0.9rem;
-        background-color: #fff;
-        transition: all 0.3s ease;
-        font-family: "Amiri", serif;
-        color: #333;
-      }
+input,
+.image-upload {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  background-color: #fff;
+  transition: all 0.3s ease;
+  font-family: "Amiri", serif;
+  color: #333;
+}
 
-      input:focus {
-        outline: none;
-        border-color: var(--gold);
-        box-shadow: 0 0 0 2px rgba(193, 154, 62, 0.2);
-      }
+input:focus {
+  outline: none;
+  border-color: var(--gold);
+  box-shadow: 0 0 0 2px rgba(193, 154, 62, 0.2);
+}
 
-      button {
-        background-color: var(--deep-green);
-        color: #fff;
-        border: none;
-        padding: 10px 15px;
-        border-radius: 6px;
-        cursor: pointer;
-        font-size: 1rem;
-        font-weight: 700;
-        transition: all 0.3s ease;
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 8px;
-        font-family: "Amiri", serif;
-      }
+button {
+  background-color: var(--deep-green);
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 700;
+  transition: all 0.3s ease;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  font-family: "Amiri", serif;
+}
 
-      button:hover {
-        background-color: #01352a;
-        transform: translateY(-2px);
-      }
+button:hover {
+  background-color: #01352a;
+  transform: translateY(-2px);
+}
 
-      .card-container {
-        position: relative;
-        width: 100%;
-        max-width: 500px;
-        margin: 0 auto 20px;
-        display: none;
-      }
+.card-container {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto 20px;
+  display: none;
+}
 
-      .eid-card {
-        background-color: var(--cream);
-        border: 1px solid rgba(193, 154, 62, 0.5);
-        border-radius: 8px;
-        padding: 0.8rem;
-        text-align: center;
-        position: relative;
-        overflow: hidden;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        min-height: auto;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-      }
+.eid-card {
+  width: 100%;
+  background-color: var(--cream);
+  border: 1px solid rgba(193, 154, 62, 0.5);
+  border-radius: 8px;
+  padding: 0.8rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  min-height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
 
-      .eid-card::after {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-image: url("assets/b.jpg");
-        background-size: cover;
-        opacity: 0.5;
-      }
+.eid-card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("assets/b.jpg");
+  background-size: cover;
+  opacity: 0.5;
+}
 
-      body.dark-mode .eid-card::after {
-        opacity: 0.2;
-      }
+body.dark-mode .eid-card::after {
+  opacity: 0.2;
+}
 
-      .eid-card-content {
-        position: relative;
-        z-index: 1;
-        padding: 1rem;
-      }
+.eid-card-content {
+  position: relative;
+  z-index: 1;
+  padding: 1rem;
+}
 
-      .eid-title {
-        font-size: 2rem;
-        color: var(--deep-green);
-        margin: 0 0 15px;
-        font-family: "Ruwudu", sans-serif;
-        font-weight: 700;
-        position: relative;
-      }
+.eid-title {
+  font-size: 2rem;
+  color: var(--deep-green);
+  margin: 0 0 15px;
+  font-family: "Ruwudu", sans-serif;
+  font-weight: 700;
+  position: relative;
+}
 
-      .eid-title::after {
-        content: "";
-        display: block;
-        width: 80px;
-        height: 2px;
-        background: linear-gradient(
-          to right,
-          var(--gold),
-          var(--deep-green),
-          var(--gold)
-        );
-        margin: 10px auto;
-        border-radius: 2px;
-      }
+.eid-title::after {
+  content: "";
+  display: block;
+  width: 80px;
+  height: 2px;
+  background: linear-gradient(
+    to right,
+    var(--gold),
+    var(--deep-green),
+    var(--gold)
+  );
+  margin: 10px auto;
+  border-radius: 2px;
+}
 
-      #recipient-display p{
-        font-size: 1.2rem;
-        color: var(--deep-green);
-        margin: 0;
-        font-family: "Ruwudu", serif;
-        font-weight: 800;
-        font-style: normal;
-      }
+#recipient-display p {
+  font-size: 1.2rem;
+  color: var(--deep-green);
+  margin: 0;
+  font-family: "Ruwudu", serif;
+  font-weight: 800;
+  font-style: normal;
+}
 
-      .eid-message {
-        font-size: 1.2rem;
-        color: var(--deep-green);
-        margin: 15px 0;
-        line-height: 1.6;
-        font-weight: 400;
-        padding: 10px;
-        background-color: #fdfeec;
-        border-radius: 8px;
-        border: 1px solid rgba(193, 154, 62, 0.2);
-      }
+.eid-message {
+  font-size: 1.2rem;
+  color: var(--deep-green);
+  margin: 15px 0;
+  line-height: 1.6;
+  font-weight: 400;
+  padding: 10px;
+  background-color: #fdfeec;
+  border-radius: 8px;
+  border: 1px solid rgba(193, 154, 62, 0.2);
+}
 
-      body.dark-mode .eid-message {
-        background-color: #0d112c;
-      }
+body.dark-mode .eid-message {
+  background-color: #0d112c;
+}
 
-      .from-name {
-        font-size: 1.2rem;
-        color: var(--deep-green);
-        margin: 20px 0 0;
-        font-weight: bold;
-        padding-top: 15px;
-        border-top: 1px dashed var(--gold);
-        display: inline-block;
-      }
+.from-name {
+  font-size: 1.2rem;
+  color: var(--deep-green);
+  margin: 20px 0 0;
+  font-weight: bold;
+  padding-top: 15px;
+  border-top: 1px dashed var(--gold);
+  display: inline-block;
+}
 
-      .arabic-pattern {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        top: 0;
-        left: 0;
-        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path fill="%23c19a3e" fill-opacity="0.05" d="M50,0 L100,50 L50,100 L0,50 Z"/></svg>');
-        background-size: 80px 80px;
-        opacity: 0.3;
-        pointer-events: none;
-        z-index: 0;
-      }
+.arabic-pattern {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path fill="%23c19a3e" fill-opacity="0.05" d="M50,0 L100,50 L50,100 L0,50 Z"/></svg>');
+  background-size: 80px 80px;
+  opacity: 0.3;
+  pointer-events: none;
+  z-index: 0;
+}
 
-      .share-buttons {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        justify-content: center;
-        margin-top: 15px;
-      }
+.share-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 15px;
+}
 
-      .share-btn {
-        padding: 8px 12px;
-        border-radius: 5px;
-        font-size: 0.9rem;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 5px;
-        transition: transform 0.2s;
-      }
+.share-btn {
+  padding: 8px 12px;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  transition: transform 0.2s;
+  text-align: center;
+}
 
-      .share-btn:hover {
-        transform: translateY(-2px);
-      }
+.share-btn:hover {
+  transform: translateY(-2px);
+}
 
-      .whatsapp-btn {
-        background-color: #25d366;
-        color: white;
-        border: none;
-      }
+.whatsapp-btn {
+  background-color: #25d366;
+  color: white;
+  border: none;
+}
 
-      .download-btn {
-        background-color: var(--deep-green);
-        color: white;
-        border: none;
-      }
+.download-btn {
+  background-color: var(--deep-green);
+  color: white;
+  border: none;
+}
 
-      .link-btn {
-        background-color: var(--gold);
-        color: white;
-        border: none;
-      }
+.link-btn {
+  background-color: var(--gold);
+  color: white;
+  border: none;
+}
 
-      .theme-toggle {
-        position: fixed;
-        top: 15px;
-        left: 15px;
-        background: var(--deep-green);
-        color: white;
-        border: none;
-        width: 35px;
-        height: 35px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        z-index: 100;
-        font-size: 0.9rem;
-      }
+.gift-btn {
+  background-color: var(--eid-red);
+  color: white;
+  border: none;
+  text-decoration: none;
+}
 
-      .music-toggle {
-        position: fixed;
-        top: 60px;
-        left: 15px;
-        background: var(--gold);
-        color: white;
-        border: none;
-        width: 35px;
-        height: 35px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        z-index: 100;
-        font-size: 0.9rem;
-      }
+.theme-toggle {
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  background: var(--deep-green);
+  color: white;
+  border: none;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  z-index: 100;
+  font-size: 0.9rem;
+}
 
-      body.dark-mode {
-        background-color: #1a1a1a;
-        color: #e0e0e0;
-      }
+.music-toggle {
+  position: fixed;
+  top: 60px;
+  left: 15px;
+  background: var(--gold);
+  color: white;
+  border: none;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  z-index: 100;
+  font-size: 0.9rem;
+}
 
-      body.dark-mode .form-container {
-        background-color: #2a2a2a;
-        color: #e0e0e0;
-      }
+body.dark-mode {
+  background-color: #1a1a1a;
+  color: #e0e0e0;
+}
 
-      body.dark-mode input,
-      body.dark-mode .image-upload {
-        background-color: #333;
-        color: #e0e0e0;
-        border-color: #444;
-      }
+body.dark-mode .form-container {
+  background-color: #2a2a2a;
+  color: #e0e0e0;
+}
 
-      body.dark-mode .eid-card {
-        background-color: #2a2a2a;
-        color: #e0e0e0;
-      }
+body.dark-mode input,
+body.dark-mode .image-upload {
+  background-color: #333;
+  color: #e0e0e0;
+  border-color: #444;
+}
 
-      body.dark-mode .eid-title,
-      body.dark-mode .eid-message,
-      body.dark-mode .from-name,
-      body.dark-mode .header h1,
-      body.dark-mode .header p,
-      body.dark-mode label {
-        color: #e0e0e0;
-      }
+body.dark-mode .eid-card {
+  background-color: #2a2a2a;
+  color: #e0e0e0;
+}
 
-      body.dark-mode .eid-card::before,
-      body.dark-mode .form-container::before {
-        opacity: 0.1;
-      }
+body.dark-mode .eid-title,
+body.dark-mode .eid-message,
+body.dark-mode .from-name,
+body.dark-mode .header h1,
+body.dark-mode .header p,
+body.dark-mode label {
+  color: #e0e0e0;
+}
 
-      /* Image upload styles */
-      .image-upload {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        padding: 12px;
-        cursor: pointer;
-        border: 1px dashed #ddd;
-        border-radius: 6px;
-        background-color: rgba(255, 255, 255, 0.5);
-      }
+body.dark-mode .eid-card::before,
+body.dark-mode .form-container::before {
+  opacity: 0.1;
+}
 
-      .image-upload i {
-        font-size: 1.2rem;
-        color: var(--deep-green);
-      }
+/* Image upload styles */
+.image-upload {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  cursor: pointer;
+  border: 1px dashed #ddd;
+  border-radius: 6px;
+  background-color: rgba(255, 255, 255, 0.5);
+}
 
-      .image-preview-container {
-        display: none;
-        text-align: center;
-        margin-top: 8px;
-      }
+.image-upload i {
+  font-size: 1.2rem;
+  color: var(--deep-green);
+}
 
-      .recipient-image {
-        width: 100px;
-        height: 100px;
-        border-radius: 50%;
-        object-fit: cover;
-        border: 2px solid var(--gold);
-        margin: 8px auto;
-        display: block;
-      }
+.image-preview-container {
+  display: none;
+  text-align: center;
+  margin-top: 8px;
+}
 
-      .remove-image {
-        background-color: var(--eid-red);
-        color: white;
-        border: none;
-        padding: 4px 8px;
-        border-radius: 4px;
-        margin-top: 4px;
-        cursor: pointer;
-        font-size: 0.8rem;
-      }
+.recipient-image {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--gold);
+  margin: 8px auto;
+  display: block;
+}
 
-      /* Islamic symbols */
-      .islamic-symbols {
-        display: flex;
-        justify-content: center;
-        gap: 1.5rem;
-        margin-top: 30px;
-        margin-bottom: 15px;
-        flex-wrap: wrap;
-      }
+.remove-image {
+  background-color: var(--eid-red);
+  color: white;
+  border: none;
+  padding: 4px 8px;
+  border-radius: 4px;
+  margin-top: 4px;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
 
-      .islamic-symbol {
-        font-size: 1.5rem;
-        opacity: 0.8;
-      }
+/* Islamic symbols */
+.islamic-symbols {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 30px;
+  margin-bottom: 15px;
+  flex-wrap: wrap;
+}
 
-      /* Animation */
-      @keyframes fadeIn {
-        from {
-          opacity: 0;
-          transform: translateY(20px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
+.islamic-symbol {
+  font-size: 1.5rem;
+  opacity: 0.8;
+}
 
-      .fade-in {
-        animation: fadeIn 0.5s ease-out forwards;
-      }
+/* Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
-      /* Responsive adjustments */
-      @media (max-width: 480px) {
-        .bismillah {
-          font-size: 1.5rem;
-        }
-        
-        .header h1 {
-          font-size: 1.5rem;
-        }
-        
-        .eid-title {
-          font-size: 1.8rem;
-        }
-        
-        .eid-message {
-          font-size: 1.1rem;
-          padding: 8px;
-        }
-        
-        .from-name {
-          font-size: 1.1rem;
-        }
-        
-        .islamic-symbols {
-          gap: 1rem;
-          margin-top: 20px;
-        }
-        
-        .islamic-symbol {
-          font-size: 1.3rem;
-        }
-        
-        .theme-toggle, .music-toggle {
-          width: 30px;
-          height: 30px;
-          font-size: 0.8rem;
-        }
-        
-        .music-toggle {
-          top: 55px;
-        }
-      }
+.fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
 
-      @media (max-width: 360px) {
-        .bismillah {
-          font-size: 1.3rem;
-        }
-        
-        .header h1 {
-          font-size: 1.3rem;
-        }
-        
-        .eid-title {
-          font-size: 1.6rem;
-        }
-        
-        .eid-message {
-          font-size: 1rem;
-        }
-      }
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  .bismillah {
+    font-size: 1.5rem;
+  }
+
+  .header h1 {
+    font-size: 1.5rem;
+  }
+
+  .eid-title {
+    font-size: 1.8rem;
+  }
+
+  .eid-message {
+    font-size: 1.1rem;
+    padding: 8px;
+  }
+
+  .from-name {
+    font-size: 1.1rem;
+  }
+
+  .islamic-symbols {
+    gap: 1rem;
+    margin-top: 20px;
+  }
+
+  .islamic-symbol {
+    font-size: 1.3rem;
+  }
+
+  .theme-toggle,
+  .music-toggle {
+    width: 30px;
+    height: 30px;
+    font-size: 0.8rem;
+  }
+
+  .music-toggle {
+    top: 55px;
+  }
+}
+
+@media (max-width: 360px) {
+  .bismillah {
+    font-size: 1.3rem;
+  }
+
+  .header h1 {
+    font-size: 1.3rem;
+  }
+
+  .eid-title {
+    font-size: 1.6rem;
+  }
+
+  .eid-message {
+    font-size: 1rem;
+  }
+}
+
+/* Crop Modal Styles */
+.crop-modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.crop-modal-content {
+  background-color: #fefefe;
+  margin: 5% auto;
+  padding: 20px;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 800px;
+  direction: rtl;
+}
+
+.crop-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.crop-modal-header h3 {
+  margin: 0;
+  color: #333;
+}
+
+.close-crop {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #777;
+}
+
+.crop-container {
+  width: 100%;
+  height: 400px;
+  margin-bottom: 15px;
+}
+
+.crop-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.crop-btn {
+  padding: 8px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+#crop-confirm {
+  background-color: #4caf50;
+  color: white;
+}
+
+#crop-cancel {
+  background-color: #f44336;
+  color: white;
+}
+
+/* For cropper.js */
+img {
+  max-width: 100%;
+}
+
+/* Dark mode for crop modal */
+.dark-mode .crop-modal-content {
+  background-color: #333;
+}
+
+.dark-mode .crop-modal-header h3 {
+  color: #fff;
+}
+
+.dark-mode .close-crop {
+  color: #ccc;
+}
+
+.watermark {
+  position: relative;
+  margin: 30px auto 15px auto;
+  text-align: center;
+  width: fit-content  ;
+  opacity: 0.7;
+  font-family: "Amiri", serif;
+  font-size: 14px;
+  color: #5d4037;
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.7);
+  padding: 3px 8px;
+  border-radius: 3px;
+  direction: rtl;
+}

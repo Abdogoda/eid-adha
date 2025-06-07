@@ -3,7 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>مولد بطاقات عيد الأضحى المبارك</title>
+    <title>عيد أضحي مبارك</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -15,7 +16,9 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
     <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css" />
   </head>
   <body>
     <div class="arabic-pattern"></div>
@@ -115,17 +118,24 @@
           <button class="share-btn link-btn" id="copy-link">
             <i class="fas fa-link"></i> نسخ رابط المشاركة
           </button>
-          <a href="https://abdogoda.github.io/eid-adha" class="share-btn gift-btn" style="display: none;">
-  <i class="fas fa-share-square"></i> إهداء التهنئة
+          <a href="https://abdogoda.github.io/eid-adha" class="share-btn gift-btn" id="gift-btn" style="display: none;">
+              <i class="fas fa-share-square"></i> إهداء التهنئة
+          </a>
           </button>
         </div>
       </div>
+      
+          <div class="watermark" id="watermark">
+            صنع بواسطة <span style="font-family: 'Ruwudu'; color: #014d3e; font-weight: bolder;">عبدالرحمن جودة</span>
+          </div>
     </div>
 
     <audio id="eid-audio" loop>
       <source src="assets/music.mp3" type="audio/mpeg" />
     </audio>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
     <script src="script.js"></script>
+
   </body>
 </html>

@@ -14,25 +14,55 @@ document.addEventListener("DOMContentLoaded", function () {
     localStorage.setItem("darkMode", darkMode);
   });
 
-  // تشغيل التكبيرات
+  // تشغيل التكبيرات - Updated audio handling
   const musicToggle = document.querySelector(".music-toggle");
   const audio = document.getElementById("eid-audio");
   let musicOn = localStorage.getItem("musicOn") === "true";
+  let audioAllowed = false;
 
-  if (musicOn) {
-    document.addEventListener("click", function handleClick() {
-      audio.play().catch((e) => console.log("Auto-play prevented:", e));
-      document.removeEventListener("click", handleClick);
-    });
-    musicToggle.innerHTML = '<i class="fas fa-volume-mute"></i>';
-  } else {
-    musicToggle.innerHTML = '<i class="fas fa-volume-up"></i>';
+  // Function to handle audio play with user interaction
+  function playAudioWithPermission() {
+    if (musicOn && audioAllowed) {
+      audio.play().catch(e => {
+        console.log("Audio play failed:", e);
+        // If play fails, show the music toggle as off
+        musicOn = false;
+        musicToggle.innerHTML = '<i class="fas fa-volume-up"></i>';
+        localStorage.setItem("musicOn", "false");
+      });
+    }
   }
 
-  musicToggle.addEventListener("click", () => {
+  // Check URL parameters first
+  const urlParams = new URLSearchParams(window.location.search);
+  const musicFromUrl = urlParams.get("music") === "true";
+  
+  // Set initial state based on URL or localStorage
+  if (musicFromUrl) {
+    musicOn = true;
+    localStorage.setItem("musicOn", "true");
+  }
+
+  // Update toggle UI
+  musicToggle.innerHTML = musicOn ? '<i class="fas fa-volume-mute"></i>' : '<i class="fas fa-volume-up"></i>';
+
+  // Enable audio on any user interaction
+  document.addEventListener('click', function enableAudio() {
+    audioAllowed = true;
+    playAudioWithPermission();
+    document.removeEventListener('click', enableAudio);
+  }, { once: true });
+
+  // Music toggle handler
+  musicToggle.addEventListener("click", (e) => {
+    e.stopPropagation(); // Prevent triggering the enableAudio listener
     musicOn = !musicOn;
     if (musicOn) {
-      audio.play();
+      audioAllowed = true;
+      audio.play().catch(e => {
+        console.log("Audio play failed:", e);
+        musicOn = false;
+      });
       musicToggle.innerHTML = '<i class="fas fa-volume-mute"></i>';
     } else {
       audio.pause();
@@ -41,33 +71,102 @@ document.addEventListener("DOMContentLoaded", function () {
     localStorage.setItem("musicOn", musicOn);
   });
 
-  // Image upload functionality
+  // Rest of your existing code (image cropping, card generation, etc.)
+  // Image upload and cropping functionality
   const imageUpload = document.getElementById("image-upload");
   const recipientImageInput = document.getElementById("recipient-image");
-  const imagePreviewContainer = document.getElementById(
-    "image-preview-container"
-  );
+  const imagePreviewContainer = document.getElementById("image-preview-container");
   const imagePreview = document.getElementById("image-preview");
   const removeImageBtn = document.getElementById("remove-image");
   let recipientImageUrl = null;
+
+  // Create modal for cropping
+  const cropModal = document.createElement("div");
+  cropModal.className = "crop-modal";
+  cropModal.innerHTML = `
+    <div class="crop-modal-content">
+      <div class="crop-modal-header">
+        <h3>قص الصورة</h3>
+        <button class="close-crop">&times;</button>
+      </div>
+      <div class="crop-container">
+        <img id="crop-image" src="" alt="صورة للقص">
+      </div>
+      <div class="crop-buttons">
+        <button class="crop-btn" id="crop-confirm">تأكيد القص</button>
+        <button class="crop-btn" id="crop-cancel">إلغاء</button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(cropModal);
+
+  let cropper;
 
   imageUpload.addEventListener("click", () => {
     recipientImageInput.click();
   });
 
-  recipientImageInput.addEventListener("change", function () {
+  recipientImageInput.addEventListener("change", function() {
     if (this.files && this.files[0]) {
       const reader = new FileReader();
-      reader.onload = function (e) {
-        imagePreview.src = e.target.result;
-        imagePreviewContainer.style.display = "block";
-        recipientImageUrl = e.target.result;
+      reader.onload = function(e) {
+        // Show cropping modal
+        const cropImage = document.getElementById("crop-image");
+        cropImage.src = e.target.result;
+        cropModal.style.display = "block";
+        
+        // Initialize cropper
+        cropper = new Cropper(cropImage, {
+          aspectRatio: 1, // Square aspect ratio (1:1)
+          viewMode: 1,
+          autoCropArea: 0.8,
+          responsive: true,
+          guides: false
+        });
       };
       reader.readAsDataURL(this.files[0]);
     }
   });
 
-  removeImageBtn.addEventListener("click", function (e) {
+  // Close modal
+  document.querySelector(".close-crop").addEventListener("click", closeCropModal);
+  document.getElementById("crop-cancel").addEventListener("click", closeCropModal);
+
+  function closeCropModal() {
+    cropModal.style.display = "none";
+    if (cropper) {
+      cropper.destroy();
+    }
+    recipientImageInput.value = "";
+  }
+
+  // Confirm crop
+  document.getElementById("crop-confirm").addEventListener("click", function() {
+    if (cropper) {
+      // Get cropped canvas
+      const canvas = cropper.getCroppedCanvas({
+        width: 300, // Set desired width
+        height: 300, // Set desired height
+        minWidth: 256,
+        minHeight: 256,
+        maxWidth: 800,
+        maxHeight: 800,
+        fillColor: '#fff',
+        imageSmoothingEnabled: true,
+        imageSmoothingQuality: 'high',
+      });
+      
+      // Convert canvas to image
+      recipientImageUrl = canvas.toDataURL("image/jpeg", 0.9);
+      imagePreview.src = recipientImageUrl;
+      imagePreviewContainer.style.display = "block";
+      
+      // Close modal
+      closeCropModal();
+    }
+  });
+
+  removeImageBtn.addEventListener("click", function(e) {
     e.stopPropagation();
     imagePreview.src = "#";
     imagePreviewContainer.style.display = "none";
@@ -76,12 +175,10 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   // التحقق من وجود اسم في الرابط
-  const urlParams = new URLSearchParams(window.location.search);
   const nameFromUrl = urlParams.get("name");
   const recipientNameFromUrl = urlParams.get("recipient");
   const imageFromUrl = urlParams.get("image");
   const darkModeFromUrl = urlParams.get("dark") === "true";
-  const musicFromUrl = urlParams.get("music") === "true";
 
   // تطبيق الإعدادات من الرابط
   if (darkModeFromUrl && !darkMode) {
@@ -89,23 +186,6 @@ document.addEventListener("DOMContentLoaded", function () {
     themeToggle.textContent = "☀️";
     darkMode = true;
     localStorage.setItem("darkMode", "true");
-  }
-
-  if (musicFromUrl && !musicOn) {
-    musicOn = true;
-    audio.play().catch((e) => console.log("Auto-play prevented:", e));
-    musicToggle.innerHTML = '<i class="fas fa-volume-mute"></i>';
-    localStorage.setItem("musicOn", "true");
-  }
-
-  // Play music if flag is on or if there's no name to share (on page refresh)
-  if (
-    (musicFromUrl ||
-      musicOn ||
-      (!nameFromUrl && !recipientNameFromUrl)) &&
-    !audio.paused
-  ) {
-    audio.play().catch((e) => console.log("Auto-play prevented:", e));
   }
 
   if (nameFromUrl || recipientNameFromUrl || imageFromUrl) {
@@ -177,13 +257,16 @@ document.addEventListener("DOMContentLoaded", function () {
     cardContainer.style.display = "block";
     cardContainer.classList.add("fade-in");
 
-    const giftButton = document.getElementById("gift-card");
+    // const eidCard = document.getElementById("eid-card");
+    const giftButton = document.getElementById("gift-btn");
 
-if (recipientName.trim() !== "") {
-  giftButton.style.display = "inline-block";
-} else {
-  giftButton.style.display = "none";
-}
+    if (recipientName.trim() !== "") {
+      // eidCard.style.display = "inline-block";
+      giftButton.style.display = "inline-block";
+    } else {
+      giftButton.style.display = "none";
+      // eidCard.style.display = "none";
+    }
 
     // إزالة تأثير الحركة بعد الانتهاء منه
     setTimeout(() => {
