@@ -211,6 +211,7 @@ button:hover {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  height: 500px;
   min-height: 550px;
 }
 
@@ -234,6 +235,7 @@ body.dark-mode .eid-card::after {
   position: relative;
   z-index: 1;
   padding: 1rem;
+  height: 100% !important;
 }
 
 .eid-title {
@@ -775,6 +777,33 @@ img {
 }
 
 
+.card-watermark {
+  position: absolute;
+  bottom: 0px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 10px;
+  z-index: 10;
+  font-family: 'Ruwudu', serif;
+  color: #5d4037;
+}
+
+.card-watermark a {
+  color: var(--deep-green);
+  text-decoration: none;
+  font-weight: bold;
+}
+
+/* Dark mode adjustments */
+.dark-mode .card-watermark,
+.dark-mode .card-watermark a {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.dark-mode .card-watermark a {
+  color: rgba(255, 255, 255, 0.7);
+}
+
 /* Paper Scraps Animation */
 .eid-confetti {
   position: fixed;
@@ -783,7 +812,7 @@ img {
   background-color: #f0f0f0;
   opacity: 0;
   z-index: 9999;
-  animation: confetti-fall 5s linear forwards;
+  animation: confetti-fall 10s linear forwards;
   transform-origin: center;
   will-change: transform, opacity;
 }

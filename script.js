@@ -309,7 +309,11 @@ document.addEventListener("DOMContentLoaded", function () {
     .getElementById("download-card")
     .addEventListener("click", function () {
       const card = document.getElementById("eid-card");
-      html2canvas(card, { useCORS: true }).then((canvas) => {
+      html2canvas(card, { 
+        useCORS: true,
+        allowTaint: true,
+        scale: 2 // Higher quality
+      }).then((canvas) => {
         const link = document.createElement("a");
         link.download = "تهنئة-عيد-الأضحى.png";
         link.href = canvas.toDataURL("image/png");
