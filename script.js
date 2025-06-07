@@ -1,77 +1,101 @@
 document.addEventListener("DOMContentLoaded", function () {
-  // تبديل الوضع الليلي
-  const themeToggle = document.querySelector(".theme-toggle");
-  let darkMode = localStorage.getItem("darkMode") === "true";
-  if (darkMode) {
-    document.body.classList.add("dark-mode");
-    themeToggle.textContent = "☀️";
-  }
+   // تبديل الوضع الليلي
+   const themeToggle = document.querySelector(".theme-toggle");
+   let darkMode = localStorage.getItem("darkMode") === "true";
+   if (darkMode) {
+     document.body.classList.add("dark-mode");
+     themeToggle.textContent = "☀️";
+   }
+ 
+   themeToggle.addEventListener("click", () => {
+     darkMode = !darkMode;
+     document.body.classList.toggle("dark-mode");
+     themeToggle.textContent = darkMode ? "☀️" : "🌙";
+     localStorage.setItem("darkMode", darkMode);
+   });
+ 
+// Audio Handling - Improved version
+const musicToggle = document.querySelector(".music-toggle");
+const audio = document.getElementById("eid-audio");
 
-  themeToggle.addEventListener("click", () => {
-    darkMode = !darkMode;
-    document.body.classList.toggle("dark-mode");
-    themeToggle.textContent = darkMode ? "☀️" : "🌙";
-    localStorage.setItem("darkMode", darkMode);
-  });
+// Check URL parameters first (overrides localStorage)
+const urlParams = new URLSearchParams(window.location.search);
+const musicFromUrl = urlParams.get("music");
 
-  // تشغيل التكبيرات - Updated audio handling
-  const musicToggle = document.querySelector(".music-toggle");
-  const audio = document.getElementById("eid-audio");
-  let musicOn = localStorage.getItem("musicOn") === "true";
-  let audioAllowed = false;
+// Set initial state - default is true unless localStorage or URL says false
+let musicOn = true;
 
-  // Function to handle audio play with user interaction
-  function playAudioWithPermission() {
-    if (musicOn && audioAllowed) {
-      audio.play().catch(e => {
-        console.log("Audio play failed:", e);
-        // If play fails, show the music toggle as off
-        musicOn = false;
-        musicToggle.innerHTML = '<i class="fas fa-volume-up"></i>';
-        localStorage.setItem("musicOn", "false");
-      });
-    }
-  }
+if (musicFromUrl !== null) {
+  musicOn = musicFromUrl === "true";
+  localStorage.setItem("musicOn", musicOn);
+} else if (localStorage.getItem("musicOn") !== null) {
+  musicOn = localStorage.getItem("musicOn") === "true";
+}
 
-  // Check URL parameters first
-  const urlParams = new URLSearchParams(window.location.search);
-  const musicFromUrl = urlParams.get("music") === "true";
+// Update toggle UI
+updateMusicToggleUI();
+
+// Function to handle audio play with fallback
+function handleAudioPlay() {
+  if (!musicOn) return;
   
-  // Set initial state based on URL or localStorage
-  if (musicFromUrl) {
-    musicOn = true;
-    localStorage.setItem("musicOn", "true");
+  const playPromise = audio.play();
+  
+  if (playPromise !== undefined) {
+    playPromise.catch(e => {
+      console.log("Audio play prevented, will wait for user interaction");
+      // Show a subtle visual cue that audio is ready but needs interaction
+      musicToggle.classList.add("needs-interaction");
+    });
   }
+}
 
-  // Update toggle UI
+// Update UI based on music state
+function updateMusicToggleUI() {
   musicToggle.innerHTML = musicOn ? '<i class="fas fa-volume-mute"></i>' : '<i class="fas fa-volume-up"></i>';
+  musicToggle.classList.toggle("active", musicOn);
+}
 
-  // Enable audio on any user interaction
-  document.addEventListener('click', function enableAudio() {
-    audioAllowed = true;
-    playAudioWithPermission();
-    document.removeEventListener('click', enableAudio);
-  }, { once: true });
+// Try to play immediately (may fail in some browsers)
+handleAudioPlay();
 
-  // Music toggle handler
-  musicToggle.addEventListener("click", (e) => {
-    e.stopPropagation(); // Prevent triggering the enableAudio listener
-    musicOn = !musicOn;
-    if (musicOn) {
-      audioAllowed = true;
-      audio.play().catch(e => {
-        console.log("Audio play failed:", e);
-        musicOn = false;
-      });
-      musicToggle.innerHTML = '<i class="fas fa-volume-mute"></i>';
-    } else {
-      audio.pause();
-      musicToggle.innerHTML = '<i class="fas fa-volume-up"></i>';
-    }
-    localStorage.setItem("musicOn", musicOn);
-  });
+// Enable audio on any user interaction
+function enableAudio() {
+  if (musicOn) {
+    audio.play().then(() => {
+      musicToggle.classList.remove("needs-interaction");
+    }).catch(e => {
+      console.log("Audio play still failed:", e);
+    });
+  }
+  document.removeEventListener('click', enableAudio);
+  document.removeEventListener('keydown', enableAudio);
+  document.removeEventListener('touchstart', enableAudio);
+}
 
-  // Rest of your existing code (image cropping, card generation, etc.)
+// Add multiple interaction listeners
+document.addEventListener('click', enableAudio, { once: true });
+document.addEventListener('keydown', enableAudio, { once: true });
+document.addEventListener('touchstart', enableAudio, { once: true });
+
+// Music toggle handler
+musicToggle.addEventListener("click", (e) => {
+  e.stopPropagation();
+  musicOn = !musicOn;
+  
+  if (musicOn) {
+    audio.play().catch(e => {
+      console.log("Audio play failed:", e);
+      musicOn = false;
+    });
+  } else {
+    audio.pause();
+  }
+  
+  updateMusicToggleUI();
+  localStorage.setItem("musicOn", musicOn);
+});
+ 
   // Image upload and cropping functionality
   const imageUpload = document.getElementById("image-upload");
   const recipientImageInput = document.getElementById("recipient-image");
