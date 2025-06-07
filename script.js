@@ -257,15 +257,12 @@ document.addEventListener("DOMContentLoaded", function () {
     cardContainer.style.display = "block";
     cardContainer.classList.add("fade-in");
 
-    // const eidCard = document.getElementById("eid-card");
     const giftButton = document.getElementById("gift-btn");
 
     if (recipientName.trim() !== "") {
-      // eidCard.style.display = "inline-block";
       giftButton.style.display = "inline-block";
     } else {
       giftButton.style.display = "none";
-      // eidCard.style.display = "none";
     }
 
     // إزالة تأثير الحركة بعد الانتهاء منه
@@ -311,7 +308,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const message = encodeURIComponent(
           `تهنئة عيد الأضحى المبارك ${
             recipientName ? `إلى ${recipientName} ` : ""
-          }من ${name}\n${shareUrl}`
+          } \n${shareUrl}`
         );
 
         // للأجهزة المحمولة
