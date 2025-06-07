@@ -340,7 +340,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const message = encodeURIComponent(
           `تهنئة عيد الأضحى المبارك \n
-          ${recipientName ? `إلى ${recipientName} ` : ""} \n
+          ${recipientName ? `إلى ${recipientName} ` : ""} 
           ${name ? `من ${name} ` : ""} \n
           ${shareUrl}`
         );
