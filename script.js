@@ -13,88 +13,97 @@ document.addEventListener("DOMContentLoaded", function () {
      themeToggle.textContent = darkMode ? "☀️" : "🌙";
      localStorage.setItem("darkMode", darkMode);
    });
+
+   // Get URL parameters
+   const urlParams = new URLSearchParams(window.location.search);
+    const recipientName = urlParams.get("recipient");
+    if(recipientName && recipientName != ""){
+      console.log("Recipient name from URL:", recipientName);
+      
+       document.getElementById("form-container").style.display = "none";
+      const overlayHTML = `
+      <div class="eid-overlay">
+        <div class="eid-decoration eid-decoration-1">🎉</div>
+        <div class="eid-decoration eid-decoration-2">🕌</div>
+        <div class="eid-decoration eid-decoration-3">🌟</div>
+        <div class="eid-overlay-content">
+          <h2>عيد مبارك</h2>
+          <p>إضغط هنا لبدأ العرض</p>
+          <button class="show-greeting-btn">عرض التهنئة</button>
+        </div>
+        <div class="eid-decoration eid-decoration-4">🌙</div>
+        <div class="eid-decoration eid-decoration-5">🐏</div>
+      </div>
+    `;
+    
+    document.body.insertAdjacentHTML('beforeend', overlayHTML);
+    console.log("Recipient name from URL:", recipientName);
+    
+    }
+
+ // Audio Handling
+ const musicToggle = document.querySelector(".music-toggle");
+ const audio = document.getElementById("eid-audio");
+ let musicOn = true; // Default to true unless specified otherwise
+
+ // Check for saved preferences
+ const musicFromUrl = urlParams.get("music");
  
-// Audio Handling - Improved version
-const musicToggle = document.querySelector(".music-toggle");
-const audio = document.getElementById("eid-audio");
+ if (musicFromUrl !== null) {
+   musicOn = musicFromUrl === "true";
+ } else if (localStorage.getItem("musicOn") !== null) {
+   musicOn = localStorage.getItem("musicOn") === "true";
+ }
 
-// Check URL parameters first (overrides localStorage)
-const urlParams = new URLSearchParams(window.location.search);
-const musicFromUrl = urlParams.get("music");
+ // Initialize audio state
+ function initAudio() {
+   updateToggleUI();
+   if (musicOn) {
+     audio.volume = 0.5; // Start with lower volume
+   }
+ }
 
-// Set initial state - default is true unless localStorage or URL says false
-let musicOn = true;
+ // Update toggle UI
+ function updateToggleUI() {
+   musicToggle.innerHTML = musicOn ? 
+     '<i class="fas fa-volume-up"></i>' : 
+     '<i class="fas fa-volume-mute"></i>';
+ }
 
-if (musicFromUrl !== null) {
-  musicOn = musicFromUrl === "true";
-  localStorage.setItem("musicOn", musicOn);
-} else if (localStorage.getItem("musicOn") !== null) {
-  musicOn = localStorage.getItem("musicOn") === "true";
-}
+ if(recipientName && recipientName != ""){
+    // Show greeting button handler
+    document.querySelector('.show-greeting-btn').addEventListener('click', function() {
+      document.querySelector('.eid-overlay').remove();
+      
+      if (musicOn) {
+        audio.play().catch(e => {
+          console.log("Audio playback error:", e);
+          musicOn = false;
+          updateToggleUI();
+          localStorage.setItem("musicOn", "false");
+        });
+      }
+      
+    }); 
+    }
 
-// Update toggle UI
-updateMusicToggleUI();
+ // Toggle handler
+ musicToggle.addEventListener("click", function(e) {
+   e.stopPropagation();
+   musicOn = !musicOn;
+   
+   if (musicOn) {
+     audio.play().catch(e => console.log("Audio play error:", e));
+   } else {
+     audio.pause();
+   }
+   
+   updateToggleUI();
+   localStorage.setItem("musicOn", musicOn);
+ });
 
-// Function to handle audio play with fallback
-function handleAudioPlay() {
-  if (!musicOn) return;
-  
-  const playPromise = audio.play();
-  
-  if (playPromise !== undefined) {
-    playPromise.catch(e => {
-      console.log("Audio play prevented, will wait for user interaction");
-      // Show a subtle visual cue that audio is ready but needs interaction
-      musicToggle.classList.add("needs-interaction");
-    });
-  }
-}
-
-// Update UI based on music state
-function updateMusicToggleUI() {
-  musicToggle.innerHTML = musicOn ? '<i class="fas fa-volume-mute"></i>' : '<i class="fas fa-volume-up"></i>';
-  musicToggle.classList.toggle("active", musicOn);
-}
-
-// Try to play immediately (may fail in some browsers)
-handleAudioPlay();
-
-// Enable audio on any user interaction
-function enableAudio() {
-  if (musicOn) {
-    audio.play().then(() => {
-      musicToggle.classList.remove("needs-interaction");
-    }).catch(e => {
-      console.log("Audio play still failed:", e);
-    });
-  }
-  document.removeEventListener('click', enableAudio);
-  document.removeEventListener('keydown', enableAudio);
-  document.removeEventListener('touchstart', enableAudio);
-}
-
-// Add multiple interaction listeners
-document.addEventListener('click', enableAudio, { once: true });
-document.addEventListener('keydown', enableAudio, { once: true });
-document.addEventListener('touchstart', enableAudio, { once: true });
-
-// Music toggle handler
-musicToggle.addEventListener("click", (e) => {
-  e.stopPropagation();
-  musicOn = !musicOn;
-  
-  if (musicOn) {
-    audio.play().catch(e => {
-      console.log("Audio play failed:", e);
-      musicOn = false;
-    });
-  } else {
-    audio.pause();
-  }
-  
-  updateMusicToggleUI();
-  localStorage.setItem("musicOn", musicOn);
-});
+ // Initialize
+ initAudio();
  
   // Image upload and cropping functionality
   const imageUpload = document.getElementById("image-upload");
